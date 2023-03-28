@@ -31,4 +31,34 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-# class
+class Client(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.CharField(max_length=45)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=45)
+
+
+class Supporter(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+
+
+class Board(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    post = models.CharField(max_length=45)
+
+
+class Conversation(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    supporter = models.ForeignKey(Supporter, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    message = models.CharField(max_length=255, null=False)
+    sender = models.CharField(max_length=255, null=False)
+    date = models.DateField(auto_now_add=True)
+
