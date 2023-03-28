@@ -59,6 +59,6 @@ class Conversation(models.Model):
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     message = models.CharField(max_length=255, null=False)
-    sender = models.CharField(max_length=255, null=False)
+    sender = models.CharField(max_length=20, null=False, choices=str_usertype)
     date = models.DateField(auto_now_add=True)
 
