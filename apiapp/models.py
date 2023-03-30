@@ -7,7 +7,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 str_usertype =(
-    ("cleint","cleint"),
+    ("client","client"),
     ("support","support"),
     ("board","board")
 )
