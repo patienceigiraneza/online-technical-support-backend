@@ -23,3 +23,4 @@ def fn_category(request):
     fetch_data = Category.objects.all()
     data = CategorySerializer(fetch_data, many= True)
     return Response(data.data)
+
