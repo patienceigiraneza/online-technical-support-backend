@@ -6,8 +6,8 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-
-def fn_rest_register(request):
+@api_view(['POST'])
+def fn_registration(request):
     def_data = UserSerializer(data = request.data)
     if def_data.is_valid():
         def_data.save()
