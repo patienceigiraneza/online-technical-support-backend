@@ -34,25 +34,44 @@ class Client(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.CharField(max_length=45)
 
+    def __str__(self):
+        return self.user
 
 class Category(models.Model):
     name = models.CharField(max_length=45)
 
+    def __str__(self):
+        return self.name
+
+class SubCategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=45)
+
+    def __str__(self):
+        return f"{self.category} -- {self.name}"
 
 class Supporter(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return f"{self.user} -- {self.category}"
 
 class Board(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     post = models.CharField(max_length=45)
 
 
+    def __str__(self):
+        return f"{self.user} -- {self.post}"
+
 class Conversation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     supporter = models.ForeignKey(Supporter, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.title} -- {self.client} -- {self.supporter}"
 
 
 class Message(models.Model):
@@ -60,4 +79,7 @@ class Message(models.Model):
     message = models.CharField(max_length=255, null=False)
     sender = models.CharField(max_length=20, null=False, choices=str_usertype)
     date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f" {self.sender} "
 
