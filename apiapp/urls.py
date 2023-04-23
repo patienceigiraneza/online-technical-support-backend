@@ -6,4 +6,5 @@ urlpatterns = [
     path('register/', views.fn_registration),
     path('login/', obtain_auth_token),
     path('category/', views.fn_category),
+    path('conversation/', views.fn_conversation),
 ]
