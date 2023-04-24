@@ -67,26 +67,26 @@ def fn_view_conversation(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ViewAll(APIView):
+class ViewAllMesseges(APIView):
     def get(self, request):
         message = Message.objects.all()
         serialisers_data = MessageSerializer(message, many=True)
         return Response(serialisers_data.data, status=status.HTTP_200_OK)
-    
+
     def post(self, request):
         serialisers_data = MessageSerializer(data=request.data)
         if serialisers_data.is_valid():
             serialisers_data.save()
             return Response(serialisers_data.data, status=status.HTTP_200_OK)
         return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
-class ViewOne(APIView):
+
+
+class ViewOneMessage(APIView):
     def get(self, request, id):
         message = Message.objects.get(id=id)
         serialisers_data = MessageSerializer(message)
         return Response(serialisers_data.data, status=status.HTTP_200_OK)
-    
+
     def put(self, request, id):
         message = Message.objects.get(id=id)
         serialisers_data = MessageSerializer(message, data=request.data)
@@ -94,10 +94,55 @@ class ViewOne(APIView):
             serialisers_data.save()
             return Response(serialisers_data.data, status=status.HTTP_201_CREATED)
         return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, id):
         message = Message.objects.get(id=id)
         message.delete()
         return Response({"status":"deleted"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
+
+
+
+@api_view(['GET', 'POST'])
+def fn_subcategory(request):
+    if request.method == 'GET':
+        subcategory= SubCategory.objects.all()
+        serializer = CategorySerializer(subcategory, many=True)
+        return Response(serializer.data)
+
+
+    if request.method == 'GET':
+        serializer = CategorySerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def fn_view_one_subcategory(request, id):
+    try:
+        subcategories = SubCategory.objects.get(pk=id)
+    except SubCategory.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CategorySerializer(subcategories)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = CategorySerializer(subcategories, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response (serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+    elif request.method == 'DELETE':
+        subcategories.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
