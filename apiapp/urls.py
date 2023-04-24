@@ -8,4 +8,8 @@ urlpatterns = [
     path('category/', views.fn_category),
     path('conversation/', views.fn_conversation),
     path('conversation/<int:id>/', views.fn_view_conversation),
+    path('subcategory/', views),
+   
+
+    
 ]

@@ -64,3 +64,47 @@ def fn_view_conversation(request, id):
     elif request.method == 'DELETE':
         fetch_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+    @api_view(['GET', 'POST'])
+    def fn_subcategory(request):
+        if request.method == 'GET':
+            subcategory= SubCategory.objects.all()
+            serializer = CategorySerializer(subcategory, many=True)
+            return Response(serializer.data)
+        
+
+        if request.method == 'GET':
+            serializer = CategorySerializer(data = request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status= status.HTTP_201_CREATED)
+            
+
+    @api_view(['GET', 'PUT', 'DELETE'])
+    def fn_subcategory_list(request, id):
+        try:
+            subcategories = SubCategory.objects.get(pk=id)
+        except SubCategory.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        if request.method == 'GET':
+            serializer = CategorySerializer(subcategories)
+            return Response(serializer.data)
+        
+        elif request.method == 'PUT':
+            serializer = CategorySerializer(subcategories, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response (serializer.data)
+            return Response (status=status.HTTP_400_BAD_REQUEST)
+        
+
+        elif request.method == 'DELETE':
+            subcategories.delete()
+            return Response (status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
