@@ -8,4 +8,6 @@ urlpatterns = [
     path('category/', views.fn_category),
     path('conversation/', views.fn_conversation),
     path('conversation/<int:id>/', views.fn_view_conversation),
+     path('message/', views.ViewAll.as_view() ),
+    path('message/<int:id>/', views.ViewOne.as_view()),
 ]

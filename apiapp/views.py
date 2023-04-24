@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from .serializers import *
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -64,3 +65,39 @@ def fn_view_conversation(request, id):
     elif request.method == 'DELETE':
         fetch_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ViewAll(APIView):
+    def get(self, request):
+        message = Message.objects.all()
+        serialisers_data = MessageSerializer(message, many=True)
+        return Response(serialisers_data.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serialisers_data = MessageSerializer(data=request.data)
+        if serialisers_data.is_valid():
+            serialisers_data.save()
+            return Response(serialisers_data.data, status=status.HTTP_200_OK)
+        return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class ViewOne(APIView):
+    def get(self, request, id):
+        message = Message.objects.get(id=id)
+        serialisers_data = MessageSerializer(message)
+        return Response(serialisers_data.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id):
+        message = Message.objects.get(id=id)
+        serialisers_data = MessageSerializer(message, data=request.data)
+        if serialisers_data.is_valid():
+            serialisers_data.save()
+            return Response(serialisers_data.data, status=status.HTTP_201_CREATED)
+        return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id):
+        message = Message.objects.get(id=id)
+        message.delete()
+        return Response({"status":"deleted"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
