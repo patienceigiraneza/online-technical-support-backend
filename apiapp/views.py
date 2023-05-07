@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 
 # Create your views here.
 
+
+# Patience Codes
 @api_view(['POST'])
 def fn_registration(request):
     def_data = UserSerializer(data = request.data)
@@ -35,6 +37,7 @@ def fn_conversation(request):
         fetch_data = Conversation.objects.filter(client=def_client)
         data = ConversationSerializer(fetch_data, many= True)
         return Response(data.data)
+
     elif request.method == 'POST':
         def_data = ConversationSerializer(data = request.data)
         if def_data.is_valid():
@@ -67,6 +70,7 @@ def fn_view_conversation(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# Michealla codes
 class ViewAllMesseges(APIView):
     def get(self, request):
         message = Message.objects.all()
@@ -102,6 +106,7 @@ class ViewOneMessage(APIView):
 
 
 
+# Arlene codes
 
 @api_view(['GET', 'POST'])
 def fn_subcategory(request):
@@ -116,7 +121,6 @@ def fn_subcategory(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status= status.HTTP_201_CREATED)
-
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
