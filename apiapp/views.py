@@ -70,6 +70,23 @@ def fn_view_conversation(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+
+@api_view(['GET', 'POST'])
+def fn_supporter(request):
+    if request.method == 'GET':
+        def_support = Supporter.objects.get(user = request.user.id)
+        fetch_data = Conversation.objects.filter(supporter=def_support)
+        data = ConversationSerializer(fetch_data, many= True)
+        return Response(data.data)
+
+    elif request.method == 'POST':
+        def_data = SupporterSerializer(data = request.data)
+        if def_data.is_valid():
+            def_data.save()
+            return Response(def_data.data, status=status.HTTP_201_CREATED)
+        return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # Michealla codes
 class ViewAllMesseges(APIView):
     def get(self, request):
