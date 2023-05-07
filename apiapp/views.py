@@ -111,7 +111,7 @@ def fn_subcategory(request):
         return Response(serializer.data)
 
 
-    if request.method == 'GET':
+    if request.method == 'POST':
         serializer = CategorySerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
