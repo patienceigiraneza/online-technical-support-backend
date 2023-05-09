@@ -105,6 +105,20 @@ def fn_number_of_subcategory(request):
         int_number = SubCategory.objects.all().count()
         return Response({"number":int_number})
 
+@api_view(['GET'])
+def fn_number_of_clients(request):
+    if request.method == 'GET':
+        int_number = Client.objects.all().count()
+        return Response({"number":int_number})
+
+
+@api_view(['GET'])
+def fn_number_of_my_conversations(request):
+    if request.method == 'GET':
+        def_client = Client.objects.filter(user=request.user)
+        int_number = Conversation.objects.filter(client = def_client)
+        return Response({"number":int_number})
+
 # ========================================================
 # Michealla codes
 class ViewAllMesseges(APIView):
