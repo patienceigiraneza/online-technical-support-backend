@@ -154,7 +154,7 @@ def fn_number_of_my_conversations(request):
         return Response({"number":int_number})
 
 # ========================================================
-# Michealla codes
+# Michaella codes
 class ViewAllMesseges(APIView):
     def get(self, request):
         message = Message.objects.all()
