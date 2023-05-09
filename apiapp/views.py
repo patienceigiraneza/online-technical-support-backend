@@ -134,15 +134,16 @@ class ViewOneMessage(APIView):
 def fn_subcategory(request):
     if request.method == 'GET':
         subcategory= SubCategory.objects.all()
-        serializer = CategorySerializer(subcategory, many=True)
+        serializer = SubCategorySerializer(subcategory, many=True)
         return Response(serializer.data)
 
 
     if request.method == 'POST':
-        serializer = CategorySerializer(data = request.data)
+        serializer = SubCategorySerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status= status.HTTP_201_CREATED)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
