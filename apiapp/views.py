@@ -98,6 +98,13 @@ def fn_number_of_category(request):
         int_number = Category.objects.all().count()
         return Response({"number":int_number})
 
+
+@api_view(['GET'])
+def fn_number_of_subcategory(request):
+    if request.method == 'GET':
+        int_number = SubCategory.objects.all().count()
+        return Response({"number":int_number})
+
 # ========================================================
 # Michealla codes
 class ViewAllMesseges(APIView):

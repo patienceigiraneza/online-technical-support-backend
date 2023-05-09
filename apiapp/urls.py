@@ -16,7 +16,7 @@ urlpatterns = [
 
     # get statistics
     path('number-categories/', views.fn_number_of_category),
-    path('number-subcategories/', views.fn_supporter),
+    path('number-subcategories/', views.fn_number_of_subcategory),
 
 
 
