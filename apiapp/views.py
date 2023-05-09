@@ -113,6 +113,7 @@ def fn_number_of_clients(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def fn_number_of_my_conversations(request):
     if request.method == 'GET':
         def_client = Client.objects.filter(user=request.user)
