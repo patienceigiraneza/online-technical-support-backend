@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # Create your views here.
 
@@ -32,7 +32,7 @@ def fn_category(request):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def fn_conversation(request):
     if request.method == 'GET':
         def_client = Client.objects.get(user = request.user.id)
@@ -49,7 +49,9 @@ def fn_conversation(request):
 
 
 
+
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def fn_view_conversation(request, id):
     try:
         fetch_data = Conversation.objects.get(pk=id)
@@ -74,6 +76,7 @@ def fn_view_conversation(request, id):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def fn_supporter(request):
     if request.method == 'GET':
         def_support = Supporter.objects.get(user = request.user.id)
