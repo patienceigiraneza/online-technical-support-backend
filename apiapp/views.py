@@ -38,6 +38,32 @@ def fn_category(request):
             return Response(def_data.data, status=status.HTTP_201_CREATED)
         return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def fn_view_category(request, id):
+    try:
+        fetch_data = Category.objects.get(pk=id)
+    except Category.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        def_serializer = CategorySerializer(fetch_data)
+        return Response(def_serializer.data)
+
+    elif request.method == 'PUT':
+        def_serializer = CategorySerializer(fetch_data, data=request.data)
+        if def_serializer.is_valid():
+            def_serializer.save()
+            return Response(def_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(def_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        fetch_data.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def fn_conversation(request):

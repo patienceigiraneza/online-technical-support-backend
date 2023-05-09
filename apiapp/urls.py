@@ -6,6 +6,7 @@ urlpatterns = [
     path('register/', views.fn_registration),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('category/', views.fn_category),
+    path('category/<int:id>/', views.fn_view_category),
     path('conversation/', views.fn_conversation),
     path('conversation/<int:id>/', views.fn_view_conversation),
     path('message/', views.ViewAllMesseges.as_view() ),
