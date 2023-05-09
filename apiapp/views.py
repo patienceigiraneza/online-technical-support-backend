@@ -24,12 +24,19 @@ def fn_home(request):
     pass
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def fn_category(request):
-    fetch_data = Category.objects.all()
-    data = CategorySerializer(fetch_data, many= True)
-    return Response(data.data)
+    if request.method == 'GET':
+        fetch_data = Category.objects.all()
+        data = CategorySerializer(fetch_data, many= True)
+        return Response(data.data)
 
+    elif request.method == 'POST':
+        def_data = CategorySerializer(data = request.data)
+        if def_data.is_valid():
+            def_data.save()
+            return Response(def_data.data, status=status.HTTP_201_CREATED)
+        return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])

@@ -20,6 +20,4 @@ urlpatterns = [
     path('number-clients/', views.fn_number_of_clients),
     path('my-conversation/', views.fn_number_of_my_conversations),
 
-
-
 ]
