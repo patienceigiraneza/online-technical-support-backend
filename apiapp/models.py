@@ -35,7 +35,7 @@ class Client(models.Model):
     address = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.user
+        return f"{self.user}"
 
 class Category(models.Model):
     name = models.CharField(max_length=45)
