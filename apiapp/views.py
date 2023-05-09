@@ -154,11 +154,11 @@ def fn_view_one_subcategory(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CategorySerializer(subcategories)
+        serializer = SubCategorySerializer(subcategories)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = CategorySerializer(subcategories, data=request.data)
+        serializer = SubCategorySerializer(subcategories, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response (serializer.data)
