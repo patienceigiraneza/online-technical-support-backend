@@ -92,6 +92,13 @@ def fn_supporter(request):
         return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def fn_number_of_category(request):
+    if request.method == 'GET':
+        int_number = Category.objects.all().count()
+        return Response({"number":int_number})
+
+# ========================================================
 # Michealla codes
 class ViewAllMesseges(APIView):
     def get(self, request):
@@ -128,8 +135,8 @@ class ViewOneMessage(APIView):
 
 
 
+# ========================================================
 # Arlene codes
-
 @api_view(['GET', 'POST'])
 def fn_subcategory(request):
     if request.method == 'GET':
