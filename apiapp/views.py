@@ -234,5 +234,46 @@ def fn_view_one_subcategory(request, id):
 
 
 
+@api_view(['GET', 'POST'])
+def fn_article(request):
+    if request.method == 'GET':
+        subcategory= Article.objects.all()
+        serializer = ArticleSerializer(subcategory, many=True)
+        return Response(serializer.data)
+
+
+    if request.method == 'POST':
+        serializer = ArticleSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status= status.HTTP_201_CREATED)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def fn_view_one_article(request, id):
+    try:
+        subcategories = Article.objects.get(pk=id)
+    except Article.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ArticleSerializer(subcategories)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ArticleSerializer(subcategories, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response (serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+    elif request.method == 'DELETE':
+        subcategories.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 
 

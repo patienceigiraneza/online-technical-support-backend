@@ -84,7 +84,7 @@ class Message(models.Model):
         return f" {self.sender} "
 
 
-class Ariticle(models.Model):
+class Article(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
     desc = models.CharField(max_length=5000, null=False)

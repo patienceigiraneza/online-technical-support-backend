@@ -14,6 +14,8 @@ urlpatterns = [
     path('subcategory/', views.fn_subcategory),
     path('subcategory/<int:id>/', views.fn_view_one_subcategory),
     path('supporter/', views.fn_supporter),
+    path('article/', views.fn_article),
+    path('article/<int:id>/', views.fn_view_one_article),
 
     # get statistics
     path('number-categories/', views.fn_number_of_category),
