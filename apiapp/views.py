@@ -124,6 +124,7 @@ def fn_supporter(request):
             return Response(def_data.data, status=status.HTTP_201_CREATED)
         return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# statistics
 
 @api_view(['GET'])
 def fn_number_of_category(request):
