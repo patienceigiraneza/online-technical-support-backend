@@ -124,6 +124,30 @@ def fn_supporter(request):
             return Response(def_data.data, status=status.HTTP_201_CREATED)
         return Response(def_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def fn_view_one_supporter(request, id):
+    try:
+        subcategories = Supporter.objects.get(pk=id)
+    except Supporter.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = SupporterSerializer(subcategories)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = SupporterSerializer(subcategories, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response (serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+    elif request.method == 'DELETE':
+        subcategories.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 # statistics
 
 @api_view(['GET'])
