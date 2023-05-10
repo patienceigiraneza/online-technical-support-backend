@@ -83,3 +83,13 @@ class Message(models.Model):
     def __str__(self):
         return f" {self.sender} "
 
+
+class Ariticle(models.Model):
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=False)
+    desc = models.CharField(max_length=5000, null=False)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f" {self.subcategory} - {self.title} "
+
