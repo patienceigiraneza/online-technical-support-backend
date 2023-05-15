@@ -147,6 +147,16 @@ def fn_view_one_supporter(request, id):
         subcategories.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+# data list
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def fn_list_of_supporters_in_category(request, id):
+    if request.method == 'GET':
+        der_category = SubCategory.objects.get(id=id)
+        fetch_data = Supporter.objects.filter(category=der_category)
+        data = ConversationSerializer(fetch_data, many= True)
+        return Response(data.data)
+
 
 # statistics
 

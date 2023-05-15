@@ -52,7 +52,8 @@ class SubCategory(models.Model):
 
 class Supporter(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    category = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
+    name = models.CharField(max_length=45, default="No name")
 
     def __str__(self):
         return f"{self.user} -- {self.category}"
