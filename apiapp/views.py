@@ -65,11 +65,12 @@ def fn_view_category(request, id):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def fn_conversation(request):
     if request.method == 'GET':
-        def_client = Client.objects.get(user = request.user.id)
-        fetch_data = Conversation.objects.filter(client=def_client)
+        # def_client = Client.objects.get(user = request.user.id)
+        # fetch_data = Conversation.objects.filter(client=def_client)
+        fetch_data = Conversation.objects.all()
         data = ConversationSerializer(fetch_data, many= True)
         return Response(data.data)
 
@@ -149,12 +150,11 @@ def fn_view_one_supporter(request, id):
 
 # data list
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def fn_list_of_supporters_in_category(request, id):
     if request.method == 'GET':
         der_category = SubCategory.objects.get(id=id)
         fetch_data = Supporter.objects.filter(category=der_category)
-        data = ConversationSerializer(fetch_data, many= True)
+        data = SubCategorySerializer(fetch_data, many= True)
         return Response(data.data)
 
 
