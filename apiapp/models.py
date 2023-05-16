@@ -69,7 +69,7 @@ class Board(models.Model):
 class Conversation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     supporter = models.ForeignKey(Supporter, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, default='Chat')
 
     def __str__(self):
         return f"{self.title} -- {self.client} -- {self.supporter}"
@@ -82,7 +82,7 @@ class Message(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f" {self.sender} "
+        return f"{self.conversation} {self.sender} "
 
 
 class Article(models.Model):

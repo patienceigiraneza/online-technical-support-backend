@@ -24,6 +24,7 @@ urlpatterns = [
     path('number-categories/', views.fn_number_of_category),
     path('number-subcategories/', views.fn_number_of_subcategory),
     path('number-clients/', views.fn_number_of_clients),
+    path('number-supporters/', views.fn_number_of_supporters),
     path('my-conversation/', views.fn_number_of_my_conversations),
 
 ]

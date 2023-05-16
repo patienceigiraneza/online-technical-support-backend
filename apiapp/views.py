@@ -189,13 +189,19 @@ def fn_number_of_clients(request):
         int_number = Client.objects.all().count()
         return Response({"number":int_number})
 
+@api_view(['GET'])
+def fn_number_of_supporters(request):
+    if request.method == 'GET':
+        int_number = Supporter.objects.all().count()
+        return Response({"number":int_number})
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def fn_number_of_my_conversations(request):
     if request.method == 'GET':
-        def_client = Client.objects.filter(user=request.user)
-        int_number = Conversation.objects.filter(client = def_client)
+        def_client = Client.objects.get(user=request.user)
+        int_number = Conversation.objects.filter(client = def_client).count()
         return Response({"number":int_number})
 
 # ========================================================
