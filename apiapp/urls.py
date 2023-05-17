@@ -23,6 +23,7 @@ urlpatterns = [
     path('insert-conversation/', views.fn_insert_conversation),
     path('get-client-id/', views.fn_get_client_id),
     path('get-message-list/<int:id>/', views.fn_get_messages_list),
+    path('insert-message/', views.fn_insert_messages_list),
 
     # get statistics
     path('number-categories/', views.fn_number_of_category),

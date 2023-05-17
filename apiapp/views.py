@@ -206,6 +206,15 @@ def fn_get_messages_list(request, id):
         return Response(data.data)
 
 
+@api_view(['GET', 'POST'])
+def fn_insert_messages_list(request):
+    if request.method == 'POST':
+        serialisers_data = MessageSerializer(data=request.data)
+        if serialisers_data.is_valid():
+            serialisers_data.save()
+            return Response(serialisers_data.data, status=status.HTTP_200_OK)
+        return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # statistics
 
