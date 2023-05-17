@@ -109,6 +109,21 @@ def fn_view_conversation(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def fn_insert_conversation(request):
+    def_client = Client.objects.get(user=request.user)
+    str_sid = request.POST.get['supporter']
+    str_title = request.POST.get['title']
+    def_supporter = Supporter.objects.get(id=str_sid)
+    def_form = Conversation()
+    def_form.client = def_client
+    def_form.supporter = def_supporter
+    def_form.title = str_title
+    def_form.save()
+    return Response({"status":"created"}, status=status.HTTP_201_CREATED)
+
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
