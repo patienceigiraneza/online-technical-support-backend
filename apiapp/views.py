@@ -69,7 +69,7 @@ def fn_view_category(request, id):
 def fn_conversation(request):
     if request.method == 'GET':
         def_client = Client.objects.get(user = request.user)
-        fetch_data = Conversation.objects.filter(client=def_client)
+        fetch_data = Conversation.objects.filter(client=def_client).order_by('-id')
         # print(request.user)
         # fetch_data = Conversation.objects.all()
         data = ConversationSerializer(fetch_data, many= True)
@@ -194,6 +194,17 @@ def fn_list_of_subcategory_in_category(request, id):
         fetch_data = SubCategory.objects.filter(category=def_category)
         data = SubCategorySerializer(fetch_data, many= True)
         return Response(data.data)
+
+
+@api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+def fn_get_messages_list(request, id):
+    if request.method == 'GET':
+        def_conv = Conversation.objects.get(id =id)
+        fetch_data = Message.objects.filter(conversation=def_conv).order_by('-id')
+        data = MessageSerializer(fetch_data, many= True)
+        return Response(data.data)
+
 
 
 # statistics
