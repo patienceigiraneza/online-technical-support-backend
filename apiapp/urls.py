@@ -20,6 +20,8 @@ urlpatterns = [
     path('get-supporters/<int:id>/', views.fn_list_of_supporters_in_category),
     path('get-subcategory/<int:id>/', views.fn_list_of_subcategory_in_category),
 
+
+    path('get-conversation/<int:id>/', views.fn_conversation_list),
     path('insert-conversation/', views.fn_insert_conversation),
     path('get-client-id/', views.fn_get_client_id),
     path('get-message-list/<int:id>/', views.fn_get_messages_list),

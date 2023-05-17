@@ -178,6 +178,19 @@ def fn_view_one_supporter(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # data list
+#===========================
+
+@api_view(['GET'])
+def fn_conversation_list(request, id):
+    if request.method == 'GET':
+        def_client = Client.objects.get(id = id)
+        fetch_data = Conversation.objects.filter(client=def_client).order_by('-id')
+        # print(request.user)
+        # fetch_data = Conversation.objects.all()
+        data = ConversationSerializer(fetch_data, many= True)
+        return Response(data.data)
+
+
 @api_view(['GET'])
 def fn_list_of_supporters_in_category(request, id):
     if request.method == 'GET':
