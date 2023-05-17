@@ -214,7 +214,8 @@ def fn_list_of_subcategory_in_category(request, id):
 def fn_get_messages_list(request, id):
     if request.method == 'GET':
         def_conv = Conversation.objects.get(id =id)
-        fetch_data = Message.objects.filter(conversation=def_conv).order_by('id')
+        fetch_data = Message.objects.filter(conversation=def_conv).order_by('-id')[:3]
+        fetch_data = reversed(fetch_data)
         data = MessageSerializer(fetch_data, many= True)
         return Response(data.data)
 
