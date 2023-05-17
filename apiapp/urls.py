@@ -8,7 +8,6 @@ urlpatterns = [
     path('category/', views.fn_category),
     path('category/<int:id>/', views.fn_view_category),
     path('conversation/', views.fn_conversation),
-    path('insert-conversation/', views.fn_insert_conversation),
     path('conversation/<int:id>/', views.fn_view_conversation),
     path('message/', views.ViewAllMesseges.as_view() ),
     path('message/<int:id>/', views.ViewOneMessage.as_view()),
@@ -20,6 +19,9 @@ urlpatterns = [
     path('tutorial/<int:id>/', views.fn_view_one_article),
     path('get-supporters/<int:id>/', views.fn_list_of_supporters_in_category),
     path('get-subcategory/<int:id>/', views.fn_list_of_subcategory_in_category),
+
+    path('insert-conversation/', views.fn_insert_conversation),
+    path('get-client-id/', views.fn_get_client_id),
 
     # get statistics
     path('number-categories/', views.fn_number_of_category),
