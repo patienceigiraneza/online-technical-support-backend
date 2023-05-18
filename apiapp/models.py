@@ -88,7 +88,7 @@ class Message(models.Model):
 
 
 class Article(models.Model):
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, null=False)
     desc = models.CharField(max_length=5000, null=False)
     date = models.DateField(auto_now_add=True)

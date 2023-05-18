@@ -230,6 +230,17 @@ def fn_insert_messages_list(request):
         return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+@api_view(['GET', 'POST'])
+def fn_insert_messages_list_admin(request):
+    if request.method == 'POST':
+        serialisers_data = MessageSerializer(data=request.data)
+        if serialisers_data.is_valid():
+            serialisers_data.save()
+            return Response(serialisers_data.data, status=status.HTTP_200_OK)
+        return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # statistics
 
 @api_view(['GET'])
