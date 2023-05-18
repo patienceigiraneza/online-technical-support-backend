@@ -241,6 +241,16 @@ def fn_insert_messages_list_admin(request):
         return Response(serialisers_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def fn_check_supporter_if_logged_in(request):
+    try:
+        Supporter.objects.get(user =request.user)
+        return Response({"status":"ok"})
+    except:
+        pass
+
 # statistics
 
 @api_view(['GET'])
