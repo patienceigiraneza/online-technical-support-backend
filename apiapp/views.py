@@ -370,6 +370,7 @@ def fn_view_one_article(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
+        subcategories = Article.objects.get(pk=id)
         serializer = ArticleSerializer(subcategories)
         return Response(serializer.data)
 
