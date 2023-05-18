@@ -28,11 +28,12 @@ class CustomUser(AbstractUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        Client.objects.create(user=instance, address='Kigali')
 
 
 class Client(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    address = models.CharField(max_length=45)
+    address = models.CharField(max_length=45, null=True)
 
     def __str__(self):
         return f"{self.user}"
@@ -53,7 +54,7 @@ class SubCategory(models.Model):
 class Supporter(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
-    name = models.CharField(max_length=45, default="No name")
+    name = models.CharField(max_length=45, default="Kigali")
 
     def __str__(self):
         return f"{self.user} -- {self.category}"
