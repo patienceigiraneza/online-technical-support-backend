@@ -22,8 +22,10 @@ urlpatterns = [
 
 
     path('get-conversation/<int:id>/', views.fn_conversation_list),
+    path('get-sup-conversation/<int:id>/', views.fn_sup_conversation_list),
     path('insert-conversation/', views.fn_insert_conversation),
     path('get-client-id/', views.fn_get_client_id),
+    path('get-supp-id/', views.fn_get_supp_id),
     path('get-message-list/<int:id>/', views.fn_get_messages_list),
     path('insert-message/', views.fn_insert_messages_list),
     path('insert-message-admin/', views.fn_insert_messages_list_admin),
@@ -35,5 +37,10 @@ urlpatterns = [
     path('number-clients/', views.fn_number_of_clients),
     path('number-supporters/', views.fn_number_of_supporters),
     path('my-conversation/', views.fn_number_of_my_conversations),
+
+    # current month
+    path('number-clients-month/', views.fn_number_of_clients_this_month),
+    path('number-supporters-month/', views.fn_number_of_supporters_this_month),
+    path('my-conversation-month/', views.fn_number_of_my_conversations_month),
 
 ]

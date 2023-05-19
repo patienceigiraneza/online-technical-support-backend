@@ -47,6 +47,7 @@ class Category(models.Model):
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=45)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.category} -- {self.name}"
@@ -55,6 +56,7 @@ class Supporter(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
     name = models.CharField(max_length=45, default="Kigali")
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} -- {self.category}"
@@ -71,6 +73,7 @@ class Conversation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     supporter = models.ForeignKey(Supporter, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, default='Chat')
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.title} -- {self.client} -- {self.supporter}"

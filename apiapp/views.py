@@ -5,9 +5,10 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-
+from datetime import datetime
 # Create your views here.
 
+current_month = datetime.now().month
 
 # Patience Codes
 @api_view(['POST'])
@@ -137,6 +138,13 @@ def fn_get_client_id(request):
     return Response({"id":def_client}, status=status.HTTP_201_CREATED)
 
 
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def fn_get_supp_id(request):
+    def_client = Supporter.objects.get(user=request.user).id
+    return Response({"id":def_client}, status=status.HTTP_201_CREATED)
+
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -185,6 +193,17 @@ def fn_conversation_list(request, id):
     if request.method == 'GET':
         def_client = Client.objects.get(id = id)
         fetch_data = Conversation.objects.filter(client=def_client).order_by('-id')
+        # print(request.user)
+        # fetch_data = Conversation.objects.all()
+        data = ConversationSerializer(fetch_data, many= True)
+        return Response(data.data)
+
+
+@api_view(['GET'])
+def fn_sup_conversation_list(request, id):
+    if request.method == 'GET':
+        def_sup = Supporter.objects.get(id = id)
+        fetch_data = Conversation.objects.filter(supporter=def_sup).order_by('-id')
         # print(request.user)
         # fetch_data = Conversation.objects.all()
         data = ConversationSerializer(fetch_data, many= True)
@@ -272,12 +291,37 @@ def fn_number_of_clients(request):
         int_number = Client.objects.all().count()
         return Response({"number":int_number})
 
+
+
+@api_view(['GET'])
+def fn_number_of_clients_this_month(request):
+    if request.method == 'GET':
+        int_number = Client.objects.filter(date__month=current_month).count()
+        return Response({"number":int_number})
+
+
+
 @api_view(['GET'])
 def fn_number_of_supporters(request):
     if request.method == 'GET':
         int_number = Supporter.objects.all().count()
         return Response({"number":int_number})
 
+@api_view(['GET'])
+def fn_number_of_supporters_this_month(request):
+    if request.method == 'GET':
+        int_number = Supporter.objects.filter(date__month=current_month).count()
+        return Response({"number":int_number})
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def fn_number_of_my_conversations_month(request):
+    if request.method == 'GET':
+        def_client = Client.objects.get(user=request.user)
+        int_number = Conversation.objects.filter(client = def_client).count()
+        return Response({"number":int_number})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -286,6 +330,8 @@ def fn_number_of_my_conversations(request):
         def_client = Client.objects.get(user=request.user)
         int_number = Conversation.objects.filter(client = def_client).count()
         return Response({"number":int_number})
+
+
 
 # ========================================================
 # Michaella codes
